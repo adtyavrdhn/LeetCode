@@ -1,6 +1,6 @@
 class Solution {
 public:
-     vector<vector<string>> res;
+     int res;
     int totalNQueens(int n) {
         // return empty if n <= 0
         if(n <= 0) return {{}};
@@ -11,14 +11,14 @@ public:
         dfs(board,0);
         
         
-        return res.size();
+        return res;
     }
      void dfs(vector<string> &board, int row)
     {
         // exit condition
         if(row == board.size())
         {
-            res.push_back(board);
+            res++;
             return;
         }
         
