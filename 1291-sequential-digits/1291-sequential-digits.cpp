@@ -1,27 +1,37 @@
 class Solution {
 public:
-    vector<int> ans;
-     void dfs(int low, int high, int i, int num){
-        
-        if (num >= low && num <= high)
-            ans.push_back(num);
-      
-         
-        if (num > high || i>9) 
-            return;
-         
-         
-        dfs(low, high, i+1, num*10 + i);
-    }
-    
     vector<int> sequentialDigits(int low, int high) 
     {
-        for(int i=1; i<=9; i++)
-            dfs(low, high, i, 0);
+         vector<int> res;
+
+        queue<int> q;
         
-        sort(ans.begin(), ans.end());
+	
+        for(int i = 1; i <= 9; i++)
+        {
+            q.push(i);
+        }
         
+
+        while(!q.empty())
+        {
+            int num = q.front();
+            q.pop();
+            
+            int last = num % 10;
+            int next = (num * 10) + (last + 1);
+            
+            if(num >= low) 
+            {
+                res.push_back(num);
+            }
+            
+            if(last != 9 && next <= high) 
+            {
+                q.push(next);
+            }
+        }
         
-        return ans;
+        return res;
     }
 };
