@@ -2,23 +2,26 @@ class Solution {
 public:
     void rotate(vector<int>& nums, int k) 
     {
-        int n = nums.size();
-       if ((n == 0) || (k <= 0))
-            {
-                return;
-            }
+            int n = nums.size();
+             k=k%n;
+        
+           rv(nums,0,n-1);
+           rv(nums,0,k-1);
+           rv(nums,k,n-1);
+           
             
+    }
+    
+    void rv(vector<int>&nums, int start, int end)
+    {
+        while(start < end)
+        {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end]=temp;
             
-            vector<int> numsCopy(n);
-            for (int i = 0; i < n; i++)
-            {
-                numsCopy[i] = nums[i];
-            }
-            
-         
-            for (int i = 0; i < n; i++)
-            {
-                nums[(i + k)%n] = numsCopy[i];
-            }
+            start++;
+            end--;
+        }
     }
 };
