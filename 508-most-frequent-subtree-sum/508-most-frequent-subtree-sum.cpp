@@ -32,8 +32,8 @@ public:
             return 0;
         
         int s = dfs(root->left) + dfs(root->right) + (root->val);
-        
-        maxi = max(maxi,++mpp[s]);
+        mpp[s]++;
+        maxi = max(maxi,mpp[s]);
         
         return s;
     }
