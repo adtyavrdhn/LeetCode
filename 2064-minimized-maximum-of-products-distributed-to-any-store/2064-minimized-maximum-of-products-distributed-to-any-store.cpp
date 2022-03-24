@@ -5,7 +5,7 @@ public:
         int left  = 1;
         int right = (int)1e6;
         
-        while(left < right)
+        while(left <= right)
         {
             int mid = (left + right)/2;
             int sum = 0;
@@ -18,7 +18,7 @@ public:
             if(sum>n)
                 left = mid + 1;
             else
-                right = mid;
+                right = mid-1;
         }
         
         return left;
