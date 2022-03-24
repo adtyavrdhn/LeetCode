@@ -1,32 +1,27 @@
 class Solution {
 public:
-    int minEatingSpeed(vector<int>& piles, int h) {
-        int start = 1;
-        int end = 1e9;
+    int minEatingSpeed(vector<int>& piles, int h) 
+    {
+        int left = 1;
+        int right = (int)1e9;
         
-        
-        
-        while(start < end)
+        while(left<right)
         {
-            int mid = (start + end)/2;
-            
-            int sum = 0;
-            for(int i=0;i<piles.size();i++)
+            int mid = (left+right)/2;
+            int sum=0;
+            for(int i=0;i<size(piles);i++)
             {
-                sum+= piles[i]/mid + (piles[i]%mid != 0);
+                sum+=(piles[i]+mid-1)/mid;
             }
             
-            if(sum <= h)
+            if(sum>h)
             {
-                end = mid;
+                left = mid + 1;
             }
             else
-            {
-                start = mid + 1;
-            }
+                right = mid;
         }
         
-        
-        return end;
+        return left;
     }
 };
