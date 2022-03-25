@@ -13,10 +13,9 @@ public:
         if(index==nums.size())
         {
             res.push_back(nums);
-            // return;
+            return;
         }
-        else
-         {
+        
         for(int i=index;i<nums.size();i++)
         {
             if(i!=index && nums[i]==nums[index])
@@ -26,6 +25,7 @@ public:
             helper(nums,index+1);
           
         }
-         }
+            
+         
     }
 };
