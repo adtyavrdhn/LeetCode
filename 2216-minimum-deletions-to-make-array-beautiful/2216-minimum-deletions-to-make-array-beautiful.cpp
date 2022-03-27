@@ -5,7 +5,7 @@ public:
         int n = size(nums);
         int count = 0;
         
-        if(n==1)return 1; // if there is only one digit, delete it and make the array empty
+        // if(n==1)return 1; // if there is only one digit, delete it and make the array empty
         if(n==0) return 0; // empty array is beautiful
         
         
