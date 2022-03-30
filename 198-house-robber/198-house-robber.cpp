@@ -1,28 +1,22 @@
 class Solution {
 public:
-    int res = INT_MIN;
-    
     int rob(vector<int>& nums) 
     {
-        int n = nums.size();
-        vector<int> dp(n,-1);
-        return helper(nums,n-1,dp);
-    }
-    
-    int helper(vector<int> &nums, int index,vector<int>& dp)
-    {
-          if(index == 0) return nums[index];
-        if(index<0) return 0;
+        int n = size(nums);
+        vector<int> dp(n,0);
         
-        if(dp[index-1]!=-1)
-            return dp[index];
+        dp[0]=nums[0];
         
+        for(int i=1;i<n;i++)
+        {
+           int take = nums[i];
+            if(i>1) take+=dp[i-2];
+            
+            int dont = dp[i-1];
+            
+            dp[i] = max(take,dont);
+        }
         
-        int dont = helper(nums,index-1,dp);
-        int pick = nums[index] + helper(nums,index-2,dp);
-        
-        
-        return dp[index] = max(pick,dont);
-        
+        return dp[n-1];
     }
 };
