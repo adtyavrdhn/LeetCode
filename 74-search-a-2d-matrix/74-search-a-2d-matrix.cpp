@@ -1,7 +1,8 @@
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& m, int t) {
-        if (!m.size() || !m[0].size()) return false;
+    bool searchMatrix(vector<vector<int>>& m, int t) 
+    {
+    if (!m.size() || !m[0].size()) return false;
         
         
 		int row, l = 0, r = m.size() - 1, mid;
@@ -52,5 +53,6 @@ public:
         }
         
         return false;
+        
     }
 };
