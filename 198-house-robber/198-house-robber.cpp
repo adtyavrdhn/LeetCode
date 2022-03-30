@@ -5,18 +5,22 @@ public:
         int n = size(nums);
         vector<int> dp(n,0);
         
-        dp[0]=nums[0];
-        
+        int prev=nums[0];
+        int prev2=0;
+        int curr=0;
         for(int i=1;i<n;i++)
-        {
+        {    
            int take = nums[i];
-            if(i>1) take+=dp[i-2];
+            if(i>1) take+=prev2;
             
-            int dont = dp[i-1];
+            int dont = prev;
             
-            dp[i] = max(take,dont);
+            curr = max(take,dont);
+            
+             prev2 = prev;
+           prev = curr;
         }
         
-        return dp[n-1];
+        return prev;
     }
 };
