@@ -18,14 +18,15 @@ public:
     
     bool valid(vector<vector<char>>& board, int r, int c, char ch)
     {
-        board[r][c]='.';
+        char temp =  board[r][c];
+        board[r][c]='.'; // not quite sure how this is working yet
         for(int i=0;i<9;i++)
         {
             if(board[r][i]==ch) return false;
             if(board[i][c]==ch) return false;
             if(board[3*(r/3) + i/3][3*(c/3) + i%3]==ch) return false; // checking subgrids
         }
-        
+        board[r][c]= temp;
         return true;
     }
 };
