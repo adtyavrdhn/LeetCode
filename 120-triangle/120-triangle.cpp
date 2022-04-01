@@ -5,26 +5,28 @@ public:
         int m = t.size();
         int n = t[m-1].size();
         
-        vector<vector<int>> dp(m , vector<int>(n,0));
+        vector<int> next(n,0);
         
         for(int i=0;i<n;i++)
-        {
-            dp[m-1][i]=t[m-1][i];
-        }
+            next[i]=t[m-1][i];
         
+        // at any point we only need the previous row
         for(int i=m-2;i>=0;i--)
         {
+            vector<int> curr(n,0);
             for(int j=i;j>=0;j--)
             {
                
-               int down = t[i][j] + dp[i+1][j];
-               int dio = t[i][j] + dp[i+1][j+1];
+               int down = t[i][j] + next[j];
+               int dio = t[i][j] + next[j+1];
                 
-               dp[i][j]=min(down,dio);
+               curr[j]=min(down,dio);
             }
+            
+            next = curr;
         }
         
-        return dp[0][0];
+        return next[0];
         
     }
 };
