@@ -31,13 +31,13 @@ public:
               {
                       int left = 1;
                       int right = 1;
-                   while(lo+1 < hi && nums[lo]==nums[lo+1])
+                   while(lo < hi && nums[lo]==nums[lo+1])
                    {
                        left++;
                        lo++;
                    }
                   
-                  while(lo + 1 < hi && nums[hi]==nums[hi-1])
+                  while(lo < hi && nums[hi]==nums[hi-1])
                   {
                       right++;
                       hi--;
@@ -53,7 +53,7 @@ public:
                  {
                       // M = hi - lo + 1
                     // contributed M*(M-1)/2 
-                    
+                    // M = hi-lo + 1 because this is the window with same characters(sorted array remember?) so like [4,4,,4] will give us M = 3
                     res+=(hi-lo + 1)*(hi - lo)/2;
                     res%=mod;
                     break;
