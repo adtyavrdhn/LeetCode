@@ -3,22 +3,19 @@ class Solution
     public:
         vector<int> topKFrequent(vector<int> &nums, int k)
         {
-            unordered_map<int, int> m;
+            unordered_map<int, int> mpp;
             
             for (int i = 0; i < nums.size(); i++)
-                m[nums[i]]++;	//calculating frequency
+                mpp[nums[i]]++;	//calculating frequency
             
-            
-            
-            unordered_map<int, int>::iterator it = m.begin();
             
             priority_queue<pair<int, int>> pq;
             
             
             
-            for (; it != m.end(); it++)
+            for (auto i : mpp)
             {
-                pq.push(make_pair(it->second, it->first));	//pushing pair of<frequency,distinct element of nums array > so that we get most occuring element on top
+                pq.push(make_pair(i.second, i.first));	//pushing pair of<frequency,distinct element of nums array > so that we get most occuring element on top
             }
             
             
