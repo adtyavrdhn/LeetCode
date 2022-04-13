@@ -4,7 +4,8 @@ public:
     {      
         int n = nums.size();
 
-        vector<vector<int>> dp(n+1,vector<int> (n+1,0));
+        vector<int> next(n+1,0);
+        vector<int> curr(n+1,0);
         
         
        for(int i=n-1;i>=0;i--)
@@ -14,18 +15,20 @@ public:
                
              int pick = 0;
              if(j==-1 || nums[i]>nums[j])
-             pick = 1 + dp[i+1][i+1];
+             pick = 1 + next[i+1];
         
             
-            int npick = dp[i+1][j+1];
+            int npick = next[j+1];
         
         
-           dp[i][j+1] = max(pick,npick);
+           curr[j+1] = max(pick,npick);
                
            }
+           
+           next = curr;
        }
         
-        return dp[0][0];
+        return curr[0];
     }
     
 };
