@@ -31,7 +31,7 @@ public:
         }
         
         
-        return after[1][2];
+        return curr[1][2];
         
     }
 };
