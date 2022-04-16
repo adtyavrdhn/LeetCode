@@ -19,7 +19,7 @@ public:
     
     int f(TreeNode*root, int aboveSum)
     {
-         if(!root) return 0;
+       if(!root) return 0;
         
         int right = f(root->right, aboveSum);
         int left = f(root->left, right + root->val + aboveSum);
@@ -29,6 +29,5 @@ public:
         root->val += aboveSum + right;
         
         return sumBelow;
-        
     }
 };
