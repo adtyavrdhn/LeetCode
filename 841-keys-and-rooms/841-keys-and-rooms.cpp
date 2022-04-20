@@ -1,29 +1,26 @@
 class Solution
 {
     public:
+        vector<bool> unlocked;
+    void dfs(vector<vector < int>> &rooms, int i)
+    {
+        if (unlocked[i])
+            return;
+
+        unlocked[i] = true;
+
+      
+        for (auto key: rooms[i])
+            dfs(rooms, key);
+    }
+    public:
         bool canVisitAllRooms(vector<vector < int>> &rooms)
         {
-            vector<bool> unlocked(rooms.size(),false);
+            unlocked = vector<bool> (rooms.size());
 
-            queue<int> q;
-            q.push(0);
- 
-            while (!q.empty())
-            {
-                int i = q.front();
-                q.pop();
+            dfs(rooms, 0);
 
-                if (unlocked[i])
-                    continue;
-
-                unlocked[i] = true;
-
-                for (int key: rooms[i])
-                    if (!unlocked[key])
-                        q.push(key);
-            }
-
-            for (bool x: unlocked)
+            for (auto x: unlocked)
                 if (!x)
                     return false;
 
