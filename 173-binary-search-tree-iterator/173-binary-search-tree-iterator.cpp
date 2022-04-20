@@ -34,7 +34,15 @@ public:
     
     void push(TreeNode* p)
     {
-        for(;p;myst.push(p),p=p->left);
+        if(!p)
+            return;
+        
+        
+        while(p)
+        {
+            myst.push(p);
+            p=p->left;
+        }
     }
 };
 
