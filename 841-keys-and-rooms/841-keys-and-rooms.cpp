@@ -2,10 +2,6 @@ class Solution
 {
     public:
     vector<int> parent;
-    int find(int x)
-    {
-        return parent[x] == x ? x : find(parent[x]);
-    }
     bool canVisitAllRooms(vector<vector < int>> &rooms)
     {
         int n = rooms.size();
@@ -29,7 +25,7 @@ class Solution
 
             for (int key: rooms[i])
             {
-                int x = find(key);
+                int x = parent[key];
                 if (x!=0)
                 {
                     q.push(key);
