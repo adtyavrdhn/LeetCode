@@ -1,7 +1,7 @@
 class Solution
 {
     public:
-        vector<int> parent;
+    vector<int> parent;
     vector<int> rank;
 
     int find(int x)
@@ -64,8 +64,7 @@ class Solution
 
         for(int i=0;i<parent.size();i++)
         {
-            if(parent[i]!=0)return false;
-              // cout<<parent[i]<<" ";
+            if(parent[i]!=0) return false;
         }
         return true;
     }
