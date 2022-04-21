@@ -1,28 +1,38 @@
-class MyHashSet {
-public:
-   const int BUCKET_SIZE = 123; 
-	vector<int> bucket[123];
-	MyHashSet() {
-	
-	}
-
-	void add(int key) { 
-		int index = key % BUCKET_SIZE;
-		if(!contains(key))
-			bucket[index].push_back(key);
-	}
-
-	void remove(int key) {
-		int index = key % BUCKET_SIZE;
-		for(vector<int>::iterator it = bucket[index].begin(); it != bucket[index].end(); it++)
-			if(*it == key) { bucket[index].erase(it); break; }
-	}
-
-	bool contains(int key) 
+class MyHashSet
+{
+    public:
+        int MOD;
+    vector<vector < int>> stuff;
+    MyHashSet()
     {
-		int index = key % BUCKET_SIZE;
-		for(vector<int>::iterator it = bucket[index].begin(); it != bucket[index].end(); it++)
-			if(*it == key) { return true; }
-		return false;
-	}
+        MOD = 1000;
+        stuff.resize(MOD);
+    }
+
+    void add(int key)
+    {
+        int myKey = key % MOD;
+        for (int x: stuff[myKey])
+        {
+            if (x == key) return;
+        }
+        stuff[myKey].push_back(key);
+    }
+
+    void remove(int key)
+    {
+        int myKey = key % MOD;
+        auto it = find(stuff[myKey].begin(), stuff[myKey].end(), key);
+        if (it != stuff[myKey].end())
+        {
+            stuff[myKey].erase(it);
+        }
+    }
+
+    bool contains(int key)
+    {
+        int myKey = key % MOD;
+        auto it = find(stuff[myKey].begin(), stuff[myKey].end(), key);
+        return it != stuff[myKey].end();
+    }
 };
