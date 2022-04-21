@@ -1,28 +1,28 @@
 class MyHashSet {
 public:
-    unordered_map<int,int> mpp;
-     vector<bool> ans;
-    MyHashSet() {
-        ans.resize(1e6+1,false);
-    }
-    
-    void add(int key) {
-        ans[key]=true;
-    }
-    
-    void remove(int key) {
-        ans[key]=false;
-    }
-    
-    bool contains(int key) {
-        return ans[key];
-    }
-};
+   const int BUCKET_SIZE = 123; 
+	vector<int> bucket[123];
+	MyHashSet() {
+	
+	}
 
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet* obj = new MyHashSet();
- * obj->add(key);
- * obj->remove(key);
- * bool param_3 = obj->contains(key);
- */
+	void add(int key) { 
+		int index = key % BUCKET_SIZE;
+		if(!contains(key))
+			bucket[index].push_back(key);
+	}
+
+	void remove(int key) {
+		int index = key % BUCKET_SIZE;
+		for(vector<int>::iterator it = bucket[index].begin(); it != bucket[index].end(); it++)
+			if(*it == key) { bucket[index].erase(it); break; }
+	}
+
+	bool contains(int key) 
+    {
+		int index = key % BUCKET_SIZE;
+		for(vector<int>::iterator it = bucket[index].begin(); it != bucket[index].end(); it++)
+			if(*it == key) { return true; }
+		return false;
+	}
+};
