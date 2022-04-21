@@ -2,38 +2,14 @@ class Solution
 {
     public:
     vector<int> parent;
-    vector<int> rank;
-
     int find(int x)
     {
         return parent[x] == x ? x : find(parent[x]);
     }
-
-    void union_op(int i, int j)
-    {
-        int x = find(i);
-        int y = find(j);
-
-        if (x != y)
-        {
-            if (rank[x] >= rank[y])
-            {
-                parent[y] = x;
-                rank[x]++;
-            }
-            else
-            {
-                parent[x] = y;
-                rank[y]++;
-            }
-        }
-    }
-
     bool canVisitAllRooms(vector<vector < int>> &rooms)
     {
         int n = rooms.size();
         parent.resize(n);
-        rank.resize(n,1);
         
         for(int i=0;i<n;i++)
             parent[i]=i;
