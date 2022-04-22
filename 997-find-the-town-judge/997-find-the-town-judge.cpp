@@ -13,7 +13,7 @@ public:
         
         for(int i=1;i<=n;i++)
         {
-            if(mpp[i].first==0 && mpp[i].second==n-1) return i;
+            if(mpp[i].second - mpp[i].first == n-1) return i;
         }
 
         
