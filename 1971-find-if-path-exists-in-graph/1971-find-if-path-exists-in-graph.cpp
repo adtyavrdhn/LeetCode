@@ -25,6 +25,7 @@ class Solution
             {
 
                 int v = q.front();
+                if(v==end) return true;
                 q.pop();
 
                 vector<int> temp = umap[v];
