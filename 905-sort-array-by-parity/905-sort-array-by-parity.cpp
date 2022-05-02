@@ -1,31 +1,16 @@
 class Solution {
 public:
-    vector<int> sortArrayByParity(vector<int>& nums) 
+    vector<int> sortArrayByParity(vector<int>& A) 
     {
-        vector<int> res;
-        int n = nums.size();
-        unordered_map<int,vector<int>> mpp;
-        
-        for(int i=0;i<nums.size();i++)
-        {
-            mpp[nums[i]%2].push_back(nums[i]);
+        int l = 0, r = A.size() - 1;
+        while (l < r) {
+            if (A[l] % 2 != 0) {
+                swap(A[l], A[r]);
+                --r;
+            } else {
+                ++l;
+            }
         }
-        
-       
-           
-            for(auto x : mpp[0])
-            {
-                res.push_back(x);
-            }
-            for(auto x : mpp[1])
-            {
-                res.push_back(x);
-            }
-        
-        
-        
-        
-        
-        return res;
+        return A;
     }
 };
