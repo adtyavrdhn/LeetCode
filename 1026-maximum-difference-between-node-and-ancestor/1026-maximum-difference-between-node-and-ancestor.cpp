@@ -1,30 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-       int diff = INT_MIN;
-    
-    void getMax(TreeNode *root, int mx, int mi){
-        
-        if(root == NULL) return;
-       
-        mx = max(mx, root->val);
-        mi = min(mi, root->val);
-        
-        diff = max(diff, mx - mi);
-        
-         
-        
-        getMax(root->left,mx,mi);
-        getMax(root->right,mx,mi);
-    }
-    
-    int maxAncestorDiff(TreeNode* root) {
-        
+    int res = INT_MIN;
+    int maxAncestorDiff(TreeNode* root) 
+    {
         if(!root) return 0;
         
-        int mx = INT_MIN, mi = INT_MAX;
-
-        getMax(root,mx,mi);
+     int mx = INT_MIN, mn = INT_MAX;
+            
+        f(root,mx,mn);
+        return res;
+    }
+    void f(TreeNode* root,int mx, int mn)
+    {
+        if(!root) return;
         
-        return diff;
-            }
+        
+        mx=max(mx,root->val);
+        mn=min(mn,root->val);
+        
+        res = max(res,mx-mn);
+        
+        
+        f(root->left,mx,mn);
+        f(root->right,mx,mn);
+    }
 };
