@@ -11,22 +11,22 @@ class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
     {
-        return helper(root,p,q);
+         return lca(root,p,q);
     }
-    TreeNode* helper(TreeNode* root,TreeNode* p, TreeNode* q)
+    
+   TreeNode* lca(TreeNode* root, TreeNode* p, TreeNode* q)
     {
-        if(p==root || q==root | !root)
+        if(p == root || q==root || !root)
         {
             return root;
         }
         
-        TreeNode* left = helper(root->left,p,q);
-        TreeNode* right = helper(root->right,p,q);
+        TreeNode* left = lca(root->left,p,q);
+        TreeNode* right = lca(root->right,p,q);
         
         if(left && right)
         {
             return root;
-        
         }
         
         return left ? left : right;
