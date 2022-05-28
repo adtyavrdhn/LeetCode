@@ -2,33 +2,38 @@ class Solution {
 public:
     long long res;
     vector<long long> dp;
+    vector<int> starts;
+    unordered_map<int,int> mpp;
     long long maxTaxiEarnings(int n, vector<vector<int>>& rides) 
     {
         int sz = rides.size();
         dp.resize(sz+1,-1);
-        sort(rides.begin(),rides.end());
-        return f(n,rides,0);
+        starts.resize(sz,0);
+        sort(rides.begin(),rides.end());     
+        
+        for(int i=0;i<rides.size();i++)
+        {
+            starts[i] = rides[i][0];
+        }
+        
+        return f(rides,0);
     }
     
-    long long f(int n, vector<vector<int>>& rides, int index)
+    long long f(vector<vector<int>>& rides, int index)
     {
         if(index>=rides.size())
         {
             return 0;
         }
         if(dp[index]!=-1)
-            return dp[index];
+            return dp[index];        
         
-            auto j = lower_bound(rides.begin() + index
-                             , rides.end()
-                             , rides[index][1]
-                             , [](vector<int>&vec, int temp){
-            return vec[0] < temp;
-        }) - rides.begin();
-          long long  pick = rides[index][1]-rides[index][0] + rides[index][2] + f(n,rides,j);
+        long long nstart = lower_bound(starts.begin(),starts.end(),rides[index][1]) - starts.begin();
+        
+        long long  pick = rides[index][1]-rides[index][0] + rides[index][2] + f(rides,nstart);
         
         
-        long long npick = f(n,rides,index+1);
+        long long npick = f(rides,index+1);
         
         return dp[index] = max(pick,npick);
         
