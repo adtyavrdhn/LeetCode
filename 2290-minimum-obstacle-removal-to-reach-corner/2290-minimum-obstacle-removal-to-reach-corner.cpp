@@ -31,13 +31,11 @@ class Solution
                     int nx = x + dir[k][0];
                     int ny = y + dir[k][1];
 
-                    if (nx >= 0 && ny >= 0 && nx < grid.size() && ny < grid[0].size())
+                    if (nx >= 0 && ny >= 0 && nx < grid.size() && ny < grid[0].size() &&grid[nx][ny] + dp[x][y] < dp[nx][ny])
                     {
-                        if (grid[x][y] + dp[x][y] < dp[nx][ny])
-                        {
-                            dp[nx][ny] = grid[x][y] + dp[x][y];
+                          dp[nx][ny] = grid[nx][ny] + dp[x][y];
                             q.push({nx,ny});
-                        }
+                        
                             
                     }
                 }
