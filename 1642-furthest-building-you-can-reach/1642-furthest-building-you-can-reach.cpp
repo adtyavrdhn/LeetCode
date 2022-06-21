@@ -1,47 +1,33 @@
 class Solution {
 public:
-    bool feasible(vector<int>& h, int bricks, int ladders, int mid)
-    {
-        vector<int> arr;
-        
-        for(int i=1;i<=mid;i++)
-        {
-            if(h[i] > h[i-1])
-              arr.push_back(h[i]-h[i-1]);
-        }
-        
-        sort(arr.begin(),arr.end(),greater<int>());
-    
-        int sz = arr.size();
-        
-        for(int i=ladders;i<sz;i++)
-        {
-            if(arr[i]>bricks) return false;
-            
-            bricks-=arr[i];
-        }
-        
-        return true;  
-    }
     int furthestBuilding(vector<int>& h, int bricks, int ladders) 
     {
-        int low = 0;
-        int high = h.size()-1;
-        int res = -1;
+        priority_queue<int, vector<int>, greater<int>> pq;
         
-        while(low < high)
+        int n = h.size();
+        int bsum = 0;
+        
+        
+        for(int i=1;i<n;i++)
         {
-            int mid = (low+high+1)/2;
+            int diff = h[i]-h[i-1];
             
-            if(feasible(h,bricks,ladders,mid))
+            if(diff <= 0)
+                continue;
+            
+            pq.push(diff);
+            
+            
+            if(pq.size()>ladders)
             {
-                low = mid;
+                bsum+= pq.top();
+                pq.pop();
             }
-            else
-                high = mid - 1;
+            
+            if(bsum > bricks) return i-1;
+            
         }
         
-        return low;
-        
+        return h.size()-1;
     }
 };
