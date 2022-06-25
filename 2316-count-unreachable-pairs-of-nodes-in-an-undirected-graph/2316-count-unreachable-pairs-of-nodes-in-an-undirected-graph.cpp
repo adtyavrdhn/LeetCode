@@ -68,10 +68,12 @@ class Solution
           
         long long sum = nums.back();
         
-        for (int i = nums.size() - 2; i >= 0; i--)
-        {
-            ans += sum *nums[i];
-            sum += nums[i];
+        
+       for (auto [a, b] : mpp) 
+       {
+            // cout << a << " " << b << endl;
+            ans += (long long)b*(n-b);
+            n -= b;
         }
         
         return ans;
