@@ -1,34 +1,64 @@
-class Solution
-{
-    public:
-        vector<int> platesBetweenCandles(string s, vector<vector < int>> &queries)
+class Solution {
+public:
+    vector<int> platesBetweenCandles(string s, vector<vector<int>>& queries)
+    {
+        int n = s.size();
+        
+        vector<int> left(n,-1);
+        vector<int> right(n,n);
+        
+        vector<int> res;
+        
+        
+        left[0] = -1;
+        
+        for(int i=1;i<n;i++)
         {
-            int n = s.size();
-
-            vector<int> nextCandle(n, n), prevCandle(n, -1), prefixSum(n, 0);
-
-            for (int i = 0; i < n; i++)
-            {
-
-                prevCandle[i] = (s[i] == '*') ? ((i == 0) ? prevCandle[i] : prevCandle[i - 1]) : i;
-                nextCandle[n - i - 1] = (s[n - i - 1] == '*') ? ((i == 0) ? nextCandle[n - i - 1] : nextCandle[n - i]) : n - i - 1;
-
-                prefixSum[i] = (i == 0) ? (s[i] == '*') : prefixSum[i - 1] + (s[i] == '*');
-            }
-
-            vector<int> answer;
-
-            for (auto &query: queries)
-            {
-
-                int start = nextCandle[query[0]] > query[1] ? 0 : nextCandle[query[0]];
-                int end = prevCandle[query[1]] < query[0] ? 0 : prevCandle[query[1]];
-
-                answer.push_back(prefixSum[end] - prefixSum[start]);
-            }
-
-            return answer;
+            if(s[i]=='|')
+                left[i]=i;
+            
+            else left[i] = left[i-1];
         }
-
-   	// https://leetcode.com/problems/plates-between-candles/discuss/1586720/Intuition-Explained-oror-Prefix-Sum-and-Binary-Search-oror-C%2B%2B-Clean-Code
+        
+        right[n-1]=n;
+        
+        for(int i=n-2;i>=0;i--)
+        {
+            if(s[i]=='|')
+                right[i]=i;
+            
+            else
+                right[i]=right[i+1];
+        }
+        
+        vector<int> pre(n,0);
+        
+        pre[0] = s[0]=='*';
+        
+        for(int i=1;i<n;i++)
+        {
+            pre[i] += pre[i-1] + (s[i]=='*');
+        }
+        
+        for(auto q : queries)
+        {
+            int l = q[0];
+            int r = q[1];
+            
+            int start = right[l];
+            int end = left[r];
+            
+            if(end <= start)
+            {
+                 res.push_back(0);
+            }
+            else
+            {
+                 res.push_back(pre[end]-pre[start]);
+            }
+               
+        }
+        
+        return res;
+    }
 };
