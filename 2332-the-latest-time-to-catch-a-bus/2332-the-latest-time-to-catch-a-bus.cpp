@@ -1,46 +1,55 @@
-class Solution {
-public:
-   int latestTimeCatchTheBus(vector<int>& buses, vector<int>& passengers, int capacity) {
-    
-          queue<int> q;
-        sort(buses.begin(),buses.end());
-        sort(passengers.begin(),passengers.end());
-        int n=buses.size();
-        int m=passengers.size();
-        set<int> st;
-        for(auto p:passengers)
+class Solution
+{
+    public:
+        int latestTimeCatchTheBus(vector<int> &buses, vector<int> &pass, int cap)
         {
-            q.push(p);
-            st.insert(p);
-        }
-        int ans=0;
-        for(int i=0;i<n;i++)
-        {
-            int currbus=buses[i]; // curr bus depature time.
-            int count=0; //number of people in curr bus
-            int x;
-            //CASE1
-            while(!q.empty() && count<capacity && q.front()<=currbus)
+
+            sort(buses.begin(),buses.end());
+            sort(pass.begin(),pass.end());
+            
+            queue<int> q;
+            set<int> st;
+            
+            for(auto p : pass)
             {
-                x=q.front();
-                q.pop();
-                if(st.find(x-1)==st.end()) //checking if person timing-1 doesnt exist and update the answer.
-                    ans=x-1; 
-                count++;
-            }
-            //CASE2
-            if(count<capacity)
-            {
-                while(st.find(currbus)!=st.end()) //starting from dept time find a time which does not exist int the set already.
-                {
-                    currbus--;
-                }
-                ans=max(ans,currbus);
+                q.push(p);
+                st.insert(p);
             }
             
+            int res = 0;
+            
+            for(int i=0;i<buses.size();i++)
+            {
+                int depart = buses[i];
+                
+                int count = 0;
+                
+                int p =0;
+                
+                
+                while(!q.empty() && count < cap && q.front()<=depart)
+                {
+                    p = q.front();
+                    q.pop();
+                    
+                    if(st.find(p-1)==st.end())
+                    {
+                        res = p - 1;
+                    }
+                    count++;
+                }
+                
+                if(count < cap)
+                {
+                    while(st.find(depart)!=st.end())
+                        depart--;
+                    
+                    res = max(res,depart);
+                }
+            }
+            
+            return res;
         }
-        return ans;
-    }
-    
-    // https://leetcode.com/problems/the-latest-time-to-catch-a-bus/discuss/2259176/Easy-C%2B%2B-Solution-Using-Queue-And-Set-or-optimised-without-queue
+
+   	// https://leetcode.com/problems/the-latest-time-to-catch-a-bus/discuss/2259176/Easy-C%2B%2B-Solution-Using-Queue-And-Set-or-optimised-without-queue
 };
