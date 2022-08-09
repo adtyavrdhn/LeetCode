@@ -28,16 +28,6 @@ class Solution
                 water+= min(pref[i],suff[i])-arr[i];
             }
 
-//             for (auto i: pref)
-//                 cout << i << " ";
-
-//             cout << endl;
-
-//             for (auto i: suff)
-//                 cout << i << " ";
-
-//             cout << endl;
-
             return water;
         }
 };
