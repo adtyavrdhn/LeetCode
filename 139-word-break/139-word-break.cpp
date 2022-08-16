@@ -5,8 +5,7 @@ public:
     bool wordBreak(string s, vector<string>& dict) 
     {
         int n = s.size();
-        
-        dp.resize(n,-1);
+        dp.resize(n+1,-1);
         
         for(auto i : dict)
         {
@@ -15,7 +14,6 @@ public:
         
         return f(s,0);
     }
-    
     bool f(string s, int index)
     {
         if(index==s.size())
