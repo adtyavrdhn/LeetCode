@@ -1,42 +1,47 @@
 class Solution {
 public:
-    int ladderLength(string bword, string eword, vector<string>& words) 
+    int ladderLength(string start, string end, vector<string>& words) 
     {
-        unordered_set<string> w(words.begin(),words.end());
-        queue<string> q;
-        q.push(bword);
+        unordered_set<string> st(words.begin(),words.end());
         
-        int count = 0;
+        queue<string> q;
+        q.push(start);
+        
+        
+        int res = 1;
         
         while(!q.empty())
         {
-            count++;
+            int size =  q.size();
             
-            int n = q.size();
-            for(int i=0;i<n;i++)
+            for(int i=0;i<size;i++)
             {
-                string curr = q.front();
+                auto t = q.front();
                 q.pop();
                 
-                if(curr==eword) return count;
-                
-               
-                for(int j=0;j<curr.size();j++)
+                if(t==end)
                 {
-                    for(char c='a';c<='z';c++)
+                    return res;
+                }
+                
+                for(int j=0;j<t.size();j++)
+                {
+                    
+                    string temp = t;
+                    for(char c = 'a';c<='z';c++)
                     {
-                        string temp = curr;
-                        temp[j]=c;
-                        
-                        if(w.find(temp)!=w.end())
+                        temp[j] = c;
+                        if(st.find(temp)!=st.end())
                         {
                             q.push(temp);
-                            w.erase(temp);
-                          
+                            st.erase(temp);
                         }
                     }
                 }
+                
             }
+            
+            res++;
         }
         
         return 0;
