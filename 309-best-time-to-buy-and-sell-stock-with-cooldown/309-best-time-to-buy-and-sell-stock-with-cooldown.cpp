@@ -1,27 +1,35 @@
-class Solution
-{
-    public:
-        int maxProfit(vector<int> &prices)
+class Solution {
+public:
+    int maxProfit(vector<int>& arr) 
+    {
+        int n = arr.size();
+        
+        vector<vector<int>> dp(n, vector<int> (2,-1));
+        
+        return f(arr,0,true,dp);
+    }
+    int f(vector<int>&arr, int index, bool flag,vector<vector<int>>&dp)
+    {
+        if(index>=arr.size())
         {
-            int n = prices.size();
-            vector<vector < int>> dp(n + 2, vector<int> (2, 0));
-
-            for (int i = n - 1; i >= 0; i--)
-            {
-                int profit = 0;
-                for (int j = 0; j <= 1; j++)
-                {
-
-                    if (j)
-                        profit = max(-prices[i] + dp[i + 1][0], dp[i + 1][1]);
-
-                    else
-                        profit = max((prices[i] + dp[i + 2][1]), dp[i + 1][0]);
-
-                    dp[i][j] = profit;
-                }
-            }
-
-            return dp[0][1];
+            return 0;
         }
+        
+        if(dp[index][flag]!=-1)
+        {
+            return dp[index][flag];
+        }
+        
+        int res = 0;
+        if(flag)
+        {
+            res = max(-arr[index]+f(arr,index+1,false,dp),f(arr,index+1,true,dp));
+        }
+        else
+        {
+            res = max(arr[index]+f(arr,index+2,true,dp),f(arr,index+1,false,dp));
+        }
+        
+        return dp[index][flag] = res;
+    }
 };
