@@ -1,30 +1,59 @@
-class Solution {
-public:
-    vector<int> parent;
-    int find(int x)
+class Solution
+{
+    public:
+        int find(int x, vector<int> &parent)
+        {
+            return x == parent[x] ? x : find(parent[x],parent);
+        }
+    void unionn(int i, int j, vector<int> &parent, vector<int> &size)
     {
-        return parent[x]==x ? x : find(parent[x]);
+        int x = find(i,parent);
+        int y = find(j,parent);
+
+        if (x != y)
+        {
+            if (size[x] >= size[y])
+            {
+                parent[y] = x;
+                size[x]++;
+            }
+            else
+            {
+                parent[x] = y;
+                size[y]++;
+            }
+        }
     }
-    vector<int> findRedundantConnection(vector<vector<int>>& edges) 
+    vector<int> findRedundantConnection(vector<vector < int>> &edges)
     {
         int n = edges.size();
 
- 		parent.resize(n+1, 0);
- 		for (int i = 0; i <= n; i++)
- 			parent[i] = i;
+        vector<int> parent(n+1, 0);
+        vector<int> size(n, 1);
 
- 		vector<int>res(2, 0);
- 		for (int i = 0; i < n; i++) {
- 			int x = find(edges[i][0]);
- 			int y = find(edges[i][1]);
- 			if (x != y)
- 				parent[y] = x;
- 			else {
- 				res[0] = edges[i][0];
- 				res[1] = edges[i][1];
- 			}
- 		}
+        for (int i = 0; i < n; i++)
+        {
+            parent[i] = i;
+        }
 
- 		return res;
- 	}
+        for (auto i: edges)
+        {
+            int x = i[0];
+            int y = i[1];
+
+            int px = find(x,parent);
+            int py = find(y,parent);
+
+            if (px != py)
+            {
+                unionn(px, py,parent,size);
+            }
+            else
+            {
+                return {x,y};
+            }
+        }
+
+        return {};
+    }
 };
