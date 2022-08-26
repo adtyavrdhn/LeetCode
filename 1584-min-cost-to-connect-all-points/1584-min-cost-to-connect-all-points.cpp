@@ -1,56 +1,54 @@
-class Solution {
-public:
-    int par[1001];
-    int find(int a)
+class Solution
+{
+    public:
+        vector<int> parent;
+    void unionn(int i, int j)
     {
-        if(par[a] < 0)
-            return a;
-        
-        return par[a] = find(par[a]);
+        parent[j] = i;
     }
-    
-    void Union(int a, int b)
+    int find(int x)
     {
-        par[a] = b; 
+        return x == parent[x] ? x : find(parent[x]);
     }
-    
-    int minCostConnectPoints(vector<vector<int>>& arr) 
+    int minCostConnectPoints(vector<vector < int>> &points)
     {
-        int n = arr.size();
-        
-       
-        for(int i = 0; i < n; i++) par[i] = -1;
-        
-        
+        int n = points.size();
+
+        parent.resize(n+1, -1);
+
+        for (int i = 0; i < n; i++)
+        {
+            parent[i] = i;
+        }
+
         vector<pair<int, pair<int, int>>> adj;
-        
-        for(int i = 0; i < n; i++)
+
+        for (int i = 0; i < n; i++)
         {
-            for(int j = i + 1; j < n; j++)
+            for (int j = i + 1; j < n; j++)
             {
-                int weight = abs(arr[i][0] - arr[j][0]) + 
-                             abs(arr[i][1] - arr[j][1]);
-                adj.push_back({weight, {i, j}});   
+                int dist = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]);
+
+                adj.push_back({dist,{i,j}});
             }
         }
-        
-     
+
         sort(adj.begin(), adj.end());
-        
-        int sum = 0;
-        
-        for(int i = 0; i < adj.size(); i++)
+
+        int res = 0;
+
+        for (int i = 0; i < adj.size(); i++)
         {
-            int a = find(adj[i].second.first);
-            int b = find(adj[i].second.second); 
-            
-            if(a != b) 
+            int x = find(adj[i].second.first);
+            int y = find(adj[i].second.second);
+
+            if (x != y)
             {
-                sum += adj[i].first;
-                Union(a, b);
+                res += adj[i].first;
+                unionn(x, y);
             }
         }
-        
-        return sum; 
+
+        return res;
     }
 };
