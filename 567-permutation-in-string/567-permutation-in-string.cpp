@@ -1,46 +1,43 @@
 class Solution
 {
     public:
-        bool checkInclusion(string t, string s)
+        bool checkInclusion(string s, string t)
         {
-            int n = s.size();
-            int k = t.size();
             unordered_map<char, int> mpp;
-
-            for (auto c: t)
-            {
-                mpp[c]++;
-            }
+            
+            int n = t.size();
+            
+            for (auto i: s)
+                mpp[i]++;
 
             int count = mpp.size();
+            int k = s.size();
 
             int i = 0, j = 0;
 
             while (j < n)
             {
-                mpp[s[j]]--;
+                mpp[t[j]]--;
 
-                if (mpp[s[j]] == 0)
+                if (mpp[t[j]] == 0)
+                {
                     count--;
+                }
 
                 if (j - i + 1 == k)
                 {
                     if (count == 0)
-                    {
                         return true;
-                    }
 
-                    if (mpp.find(s[i]) != mpp.end())
-                        mpp[s[i]]++;
+                    if (mpp.find(t[i]) != mpp.end())
+                        mpp[t[i]]++;
 
-                    if (mpp[s[i]] == 1)
-                    {
+                    if (mpp[t[i]] == 1)
                         count++;
-                    }
 
                     i++;
                 }
-
+                
                 j++;
             }
 
