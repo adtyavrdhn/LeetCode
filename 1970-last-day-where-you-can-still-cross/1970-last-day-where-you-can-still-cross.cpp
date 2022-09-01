@@ -3,17 +3,26 @@
 class Solution {
 public:
     vector<vector<int>> dir = {{-1,0},{0,-1},{0,1},{1,0}};
-    bool helper(vector<vector<int>>& grid){
-       
-        int n = grid.size();
-        int m = grid[0].size();
-        vector<vector<int>> visited(n, vector<int>(m,0));
+    bool helper(vector<vector<int>>& cells,int mid,int m, int n)
+    {
+        vector<vector<int>> grid(m, vector<int>(n,0));
+        
+          for(int i=0;i<mid;i++)
+        {
+            int x = cells[i][0]-1;
+            int y = cells[i][1]-1;
+            
+            grid[x][y] = 1;
+        }
+        
+        vector<vector<int>> visited(m, vector<int>(n,0));
         
         
         
         queue<pi> q;
         
-        for(int i=0;i<m;i++){
+        for(int i=0;i<n;i++)
+        {
             if(grid[0][i]==0){
                 q.push({0,i});
                 visited[0][i] = 1;
@@ -27,14 +36,14 @@ public:
             int y = q.front().second;
             q.pop();
             
-            if(x==n-1) return true;
+            if(x==m-1) return true;
             
             for(int i=0;i<4;i++)
             {
                 int r = x+dir[i][0];
                 int c = y+dir[i][1];
                 
-                if(r>=0 and r<n and c>=0 and c<m)
+                if(r>=0 and r<m and c>=0 and c<n)
                 {
                     if(!visited[r][c] and grid[r][c]==0)
                     {
@@ -48,43 +57,16 @@ public:
         return false;
     }
     
-    
-    
-    bool isPossibleToCross(vector<vector<int>>& grid, vector<vector<int>>& cells, int mid){
-       
-        for(int i=0;i<mid;i++)
-        {
-            int x = cells[i][0]-1;
-            int y = cells[i][1]-1;
-            
-            grid[x][y] = 1;
-        }
-        
-        bool res = helper(grid);
-        
-        for(int i=0;i<mid;i++)
-        {
-            int x = cells[i][0]-1;
-            int y = cells[i][1]-1;
-            
-            grid[x][y] = 0;
-        }
-        
-        if(res) return true;
-        
-        return false;
-    }
-    
-    int latestDayToCross(int row, int col, vector<vector<int>>& cells) {
+    int latestDayToCross(int m, int n, vector<vector<int>>& cells) {
         int s = 1;
-        int e = row*col;
-        vector<vector<int>> grid(row, vector<int>(col,0));
+        int e = m*n;
+        
         
         int ans = 0;
         while(s<=e){
             int mid = s + (e-s)/2;
             
-            if(isPossibleToCross(grid, cells, mid)){
+            if(helper(cells, mid,m,n)){
                 ans = mid;
                 s = mid+1;
             }
