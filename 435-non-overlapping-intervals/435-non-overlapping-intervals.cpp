@@ -14,7 +14,7 @@ public:
         {
             if(intervals[i][0] < intervals[prev][1])
             {
-                if(intervals[prev][1] >= intervals[i][1])
+                if(intervals[prev][1] > intervals[i][1])
                 {
                     prev = i;
                 }
