@@ -1,69 +1,75 @@
 /**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
+ *Definition for singly-linked list.
+ *struct ListNode {
+ *    int val;
+ *    ListNode * next;
+ *    ListNode() : val(0), next(nullptr) {}
+ *    ListNode(int x) : val(x), next(nullptr) {}
+ *    ListNode(int x, ListNode *next) : val(x), next(next) {}
+ *};
  */
-class Solution {
-public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) 
-    {
-        if(lists.size()==0)
-            return nullptr;
-        
-        if(lists.size()<2)
-            return lists[0];
-        
-        ListNode* newlist = merge(lists[0],lists[1]);
-        
-        for(int i=2;i<lists.size();i++)
+class Solution
+{
+    public:
+        ListNode* mergeKLists(vector<ListNode*> &lists)
         {
-          newlist = merge(lists[i],newlist);  
+            int n = lists.size();
+            
+            
+            if (lists.size() == 0)
+                return nullptr;
+
+            if (lists.size() < 2)
+                return lists[0];
+            
+            
+            while (n > 1)
+            {
+                for (int i = 0; i < n / 2; i++)
+                {
+                    lists[i] = merge(lists[i], lists[n - i - 1]);
+                }
+                n = (n + 1) / 2;
+            }
+
+           return lists.front();
         }
-        
-        return newlist;
-        
-    }
-    ListNode* merge(ListNode* p, ListNode* q)
+    ListNode* merge(ListNode *p, ListNode *q)
     {
-        if(!p)
+        if (!p)
             return q;
-        
-        if(!q)
+
+        if (!q)
             return p;
-        
-        ListNode* dummy = new ListNode(0);
-        
-        ListNode* temp = dummy;
-        
-        while(p && q)
+
+        ListNode *dummy = new ListNode(0);
+
+        ListNode *temp = dummy;
+
+        while (p && q)
         {
-            if(p->val < q->val)
+            if (p->val < q->val)
             {
                 temp->next = p;
-                p=p->next;
+                p = p->next;
             }
             else
             {
                 temp->next = q;
-                q=q->next;
+                q = q->next;
             }
-            
-            temp=temp->next;
+
+            temp = temp->next;
         }
-        if(p)
+        if (p)
         {
             temp->next = p;
         }
-        if(q)
+        if (q)
         {
             temp->next = q;
         }
-        
+
         return dummy->next;
     }
 };
