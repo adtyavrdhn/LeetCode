@@ -13,9 +13,14 @@ class Solution
     public:
         ListNode* reverseList(ListNode *head)
         {
-            ListNode *p = head;
-            ListNode *q = NULL;
-            ListNode *r = NULL;
+            if(!head)
+                return NULL;
+            
+            
+            ListNode* q = NULL;
+            ListNode* r = NULL;
+            
+            ListNode* p = head;
             
             while(p)
             {
@@ -27,5 +32,6 @@ class Solution
             }
             
             return q;
+            
         }
 };
