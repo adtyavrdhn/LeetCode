@@ -1,68 +1,72 @@
-class Solution
-{
-    public: vector<int> dp;
-    int jobScheduling(vector<int> &s, vector<int> &e, vector< int > &p)
+class Solution {
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) 
     {
-        int n = s.size();
+        vector<vector<int>> arr;
         
-        dp.resize(n,-1);
-
-        vector<vector < int>> arr;
-
-        for (int i = 0; i < n; i++)
+        int n = startTime.size();
+        
+        vector<int> dp(n,-1);
+        
+        for(int i=0;i<startTime.size();i++)
         {
-            arr.push_back({ s[i],
-                e[i],
-                p[i] });
+            arr.push_back({startTime[i],endTime[i],profit[i]});
         }
-
-        sort(arr.begin(), arr.end());
-        return f(arr, 0);
+        
+        sort(arr.begin(),arr.end());
+        
+        return f(arr,0,dp);
     }
-
-    int f(vector<vector < int>> &arr, int i)
+    int f(vector<vector<int>>&arr, int index,vector<int>&dp)
     {
-        if (i >= arr.size())
+        if(index >= arr.size())
         {
             return 0;
         }
-
-        if (dp[i] != -1)
-        {
-            return dp[i];
-        }
-
-        int take = 0, ntake = 0;
-        ntake = f(arr, i + 1);
-
-        int in = find(arr, arr[i][1], i);
-
-        int res = max(ntake, arr[i][2] + f(arr, in));
-
-        return dp[i] = res;
+        
+        if(dp[index]!=-1)
+            return dp[index];
+        
+        int take=0,ntake=0;
+        
+        int newindex = find(arr,arr[index][1],index);
+        
+        take = arr[index][2] + f(arr,newindex,dp);
+        
+        ntake = f(arr,index+1,dp);
+        
+        
+        return dp[index] = max(take,ntake);
     }
-    int find(vector<vector < int>> &arr, int end, int i)
+    int find(vector<vector<int>>&arr, int X, int i)
     {
-        int l = i + 1;
-        int r = arr.size() - 1;
-
-        int ind = arr.size();
-
-        while (l <= r)
+        // need to find a start >= end of prev job
+        
+        // basically lower bound to speed up and reduce a state 
+        
+        int mid;
+        
+        int n = arr.size();
+ 
+        int low = i+1;
+        int high = n-1;
+        
+        int res = n;
+    while (low <= high) 
+    {
+        mid = low + (high - low) / 2;
+ 
+        if (X <= arr[mid][0]) 
         {
-            int mid = (l + r) / 2;
-
-            if (arr[mid][0] >= end)
-            {
-                ind = min(ind, mid);
-                r = mid - 1;
-            }
-            else
-            {
-                l = mid + 1;
-            }
+            high = mid-1;
+            res = min(res,mid);
         }
-
-        return ind;
+ 
+        else 
+        {
+            low = mid + 1;
+        }
+    }
+         return res;
     }
 };
