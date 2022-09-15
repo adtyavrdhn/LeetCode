@@ -1,56 +1,30 @@
-class Solution
-{
-    public:
-        int networkDelayTime(vector<vector < int>> &edges, int n, int k)
+class Solution {
+public:
+    #define inf 1e9
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) 
+    {
+        vector<int> dist(n+1,inf);
+        dist[k] = 0;
+        
+        for(int i=0;i<n-1;i++)
         {
-            vector<vector < int>> g(n + 1, vector<int> (n + 1, -1));
-            vector<int> keys(n + 1, INT_MAX);
-
-            keys[k] = 0;
-            
-            unordered_map<int,bool> vis;
-
-            for (int i = 0; i < edges.size(); i++)
+            for(int j=0;j<times.size();j++)
             {
-                int x = edges[i][0];
-                int y = edges[i][1];
-                int wt = edges[i][2];
-
-                g[x][y] = wt;
+                int u = times[j][0];
+                int v = times[j][1];
+                int wt = times[j][2];
+                
+                dist[v] = min(dist[v],dist[u]+wt);
             }
-
-            for (int i = 0; i < n - 1; i++)
-            {
-                int u = 0;
-
-                int minkey = INT_MAX;
-
-                for (int j = 1; j <= n; j++)
-                {
-                    if (keys[j] < minkey && !vis[j])
-                    {
-                        u = j;
-                        minkey = keys[j];
-                    }
-                }
-
-                vis[u] = true;
-
-                for (int v = 1; v <= n; v++)
-                {
-                    if (g[u][v] >= 0)
-                    {
-                        keys[v] = min(keys[v], keys[u] + g[u][v]);
-                    }
-                }
-            }
-
-            int res = 0;
-            for (int i = 1; i <= n; i++)
-            {
-                res = max(res, keys[i]);
-            }
-
-            return res == INT_MAX ? -1 : res;
         }
+        
+        int res = 0;
+        for(int i=1;i<=n;i++)
+        {
+            // cout<<dist[i]<<" ";
+            res = max(res,dist[i]);
+        }
+        
+        return res == 1e9 ? -1 : res;
+    }
 };
