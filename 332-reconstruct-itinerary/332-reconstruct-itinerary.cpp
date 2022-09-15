@@ -22,7 +22,7 @@ public:
         
         return res;
     }
-    void f(string airport,map<string,multiset<string>>&mpp,vector<string>&res)
+    void f(string airport,map<string,multiset<string>>& mpp,vector<string>&res)
     {
         while (!mpp[airport].empty()) 
         {
