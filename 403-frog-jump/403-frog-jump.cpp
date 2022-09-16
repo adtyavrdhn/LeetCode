@@ -18,7 +18,7 @@ public:
             return true;
         }
         
-        if(curr > nums[n-1]) // jump past the last stone
+        if(curr > nums[n-1] || jump<=0) // jump past the last stone
         {
             return false;
         }
@@ -36,10 +36,7 @@ public:
         
         bool res = false;
         
-        res = f(nums,newpos,jump) | f(nums,newpos,jump+1);
-        
-        if(jump > 1)
-            res |= f(nums,newpos,jump-1);
+        res = f(nums,newpos,jump) | f(nums,newpos,jump+1) | f(nums,newpos,jump-1);
         
         return dp[index][jump] = res;
         
