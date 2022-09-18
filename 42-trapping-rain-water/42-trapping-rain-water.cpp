@@ -2,28 +2,28 @@ class Solution {
 public:
     int trap(vector<int>& arr) 
     {
+        int left = 0,right=0;
+        
         int n = arr.size();
-        vector<int> pref(n,0);
-        vector<int> suff(n,0);
         
-        pref[0]=arr[0], suff[n-1]=arr[n-1];
-        
-        for(int i=1;i<n;i++)
-        {
-            pref[i] = max(pref[i-1],arr[i]);
-        }
-        
-        for(int i=n-2;i>=0;i--)
-        {
-            suff[i] = max(suff[i+1],arr[i]);
-        }
+        int i=0,j=n-1;
         
         int res = 0;
         
-        
-        for(int i=0;i<n;i++)
+        while(i<j)
         {
-            res+= min(pref[i],suff[i])-arr[i];
+            if(arr[i]<=arr[j])
+            {
+                left = max(left,arr[i]);
+                res+= left-arr[i];
+                i++;
+            }
+            else
+            {
+                right = max(right,arr[j]);
+                res+= right-arr[j];
+                j--;
+            }
         }
         
         return res;
