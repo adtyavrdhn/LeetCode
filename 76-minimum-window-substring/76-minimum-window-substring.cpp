@@ -39,7 +39,7 @@ class Solution
                         ans = s.substr(i, res);
                     }
 
-                    if (mpp.find(s[i]) != mpp.end())
+                    // if (mpp.find(s[i]) != mpp.end())
                         mpp[s[i]]++;	// shrinking the window means we are removing characters from our substring and so if that character was a part of the string t, that means we need to find that character elsewhere to make up for it
 
                     if (mpp[s[i]] == 1)
