@@ -16,19 +16,19 @@ public:
     
    TreeNode* lca(TreeNode* root, TreeNode* p, TreeNode* q)
     {
-        if(p == root || q==root || !root)
+        if(p==root || q==root || !root)
         {
             return root;
         }
-        
+       
         TreeNode* left = lca(root->left,p,q);
         TreeNode* right = lca(root->right,p,q);
-        
-        if(left && right)
+       
+        if(left&&right)
         {
-            return root;
+           return root;
         }
-        
-        return left ? left : right;
+       
+       return left ? left : right;
     }
 };
