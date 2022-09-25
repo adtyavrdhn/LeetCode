@@ -30,18 +30,6 @@ public:
                 suff[i]=1;
         }
         
-        for(auto i : pref)
-        {
-            cout<<i<<" ";
-        }
-        
-        cout<<endl;
-        
-        for(auto i : suff)
-        {
-            cout<<i<<" ";
-        }
-        
         for(int i=k;i<n-k;i++)
         {
             if(pref[i-1]>=k && suff[i+k]>=k)
