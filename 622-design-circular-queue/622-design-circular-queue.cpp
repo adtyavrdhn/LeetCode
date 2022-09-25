@@ -1,12 +1,12 @@
 class MyCircularQueue {
 private:
     vector<int> q; 
-    int front = 0, rear = 0; // initialize index 0 as diffirentiator index
+    int front = 0, rear = 0;
     int qSize = 0;  
 public:
     MyCircularQueue(int k) 
     {
-        q.resize(k+1);  // +1 for differentiator index
+        q.resize(k+1);  
         qSize = k+1;  
     }
     
