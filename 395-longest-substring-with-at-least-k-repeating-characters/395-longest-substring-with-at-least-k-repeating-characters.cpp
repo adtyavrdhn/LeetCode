@@ -25,8 +25,8 @@ class Solution
             {
                 int bp = i + 1;
 
-                while (bp < end && mpp[s[bp]] < k)
-                    bp++;
+//                 while (bp < end && mpp[s[bp]] < k)
+//                     bp++;
 
                 return max(f(s, k, start, i), f(s, k, bp, end));
             }
