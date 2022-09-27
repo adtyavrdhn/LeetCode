@@ -5,8 +5,11 @@ class Solution
         {
             string res;
             int n = s.size();
+            
+            
             int left = -1, right = s.size();
-
+            
+            // right is the leftmost 'R' in the string
             for (int i = 0; i < n; i++)
             {
                 if (s[i] == 'R')
@@ -15,7 +18,8 @@ class Solution
                     break;
                 }
             }
-
+            
+            // left is the rightmost 'L' in the string
             for (int i = n - 1; i >= 0; i--)
             {
                 if (s[i] == 'L')
@@ -28,7 +32,7 @@ class Solution
             vector<int> larr(n, INT_MAX);
             vector<int> rarr(n, INT_MAX);
 
-            for (int i = left; i >= 0; i--)
+            for (int i = n-1; i >= 0; i--)
             {
                 if (s[i] == 'L')
                 {
@@ -40,7 +44,7 @@ class Solution
                 }
             }
 
-            for (int i = right; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 if (s[i] == 'R')
                 {
@@ -51,18 +55,6 @@ class Solution
                     rarr[i] = rarr[i - 1] + 1;
                 }
             }
-
-//             for (auto i: larr)
-//             {
-//                 cout << i << " ";
-//             }
-//             cout << endl;
-
-//             for (auto i: rarr)
-//             {
-//                 cout << i << " ";
-//             }
-//             cout << endl;
             
             for(int i=0;i<n;i++)
             {
