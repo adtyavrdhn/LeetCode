@@ -2,23 +2,23 @@ class Solution {
 public:
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
 
-    // making a min-heap of absolute difference and corresponding array value
+   
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
-    // store the difference one by one with the array value
 	for (int i = 0; i < arr.size(); i++)
 		pq.push({abs(arr[i] - x), arr[i]});
 
-	vector<int> ans;
+	vector<int> res;
 
-    // get the top of the heap i.e. the element with minimum absolute difference
 	for (int i = 0; i < k; i++)
 	{
-		ans.push_back(pq.top().second);
-		pq.pop(); // pop it k times
+		res.push_back(pq.top().second);
+		pq.pop();
 	}
 
-	sort(ans.begin(), ans.end());
-	return ans;
+	sort(res.begin(), res.end());
+	return res;
 }
 };
+
+// optimal:- https://leetcode.com/problems/find-k-closest-elements/discuss/2637918/C%2B%2BororBinary-Search-ororEasy-to-Understand
