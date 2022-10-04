@@ -5,11 +5,11 @@ class Solution
     {
         int n = cost.size();
         
-        vector<vector<string>> dp(n, vector<string> (target+1,"-1"));
+        vector<string> dp(target+1,"-1");
         
         return f(cost, target,0,dp);
     }
-    string f(vector<int> &cost, int target, int index,vector<vector<string>>&dp)
+    string f(vector<int> &cost, int target, int index,vector<string>&dp)
     {
         if (target == 0)
         {
@@ -21,8 +21,8 @@ class Solution
             return "0";
         }
         
-        if(dp[index][target]!="-1")
-            return dp[index][target];
+        if(dp[target]!="-1")
+            return dp[target];
         
         
         string res;
@@ -34,7 +34,7 @@ class Solution
         
         if(a=="0" || b=="0") // one answer is invalid return the other
         {
-           return dp[index][target] = a=="0" ? b : a+to_string(index+1);
+           return dp[target] = a=="0" ? b : a+to_string(index+1);
         }
         else
         {
@@ -42,13 +42,13 @@ class Solution
             
             if(a.size() == b.size())
             {
-                 return dp[index][target] = max(a,b);
+                 return dp[target] = max(a,b);
             }
             else if(b.size() > a.size())
             {
-                return dp[index][target] = b;
+                return dp[target] = b;
             }
         }
-        return dp[index][target]=a;
+        return dp[target]=a;
     }
 };
