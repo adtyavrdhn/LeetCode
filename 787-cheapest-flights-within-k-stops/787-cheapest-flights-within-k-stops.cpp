@@ -10,7 +10,6 @@ public:
         dist[src] = 0;
         vector<vector<int>> adj[n];
         
-        
         for(auto i : flights)
         {
             int x = i[0], y = i[1], wt = i[2];
@@ -44,9 +43,7 @@ public:
             }
         }
         
-        if(dist[dst]==1e9)
-            return -1;
         
-        return dist[dst];
+        return dist[dst] == 1e9 ? -1 : dist[dst];
     }
 };
