@@ -16,7 +16,7 @@ class Solution
             return "";
         }
         
-        if(index>= cost.size() || target<0)
+        if(index >= cost.size() || target<0)
         {
             return "0";
         }
@@ -24,8 +24,6 @@ class Solution
         if(dp[target]!="-1")
             return dp[target];
         
-        
-        string res;
         
         string a,b;
         
