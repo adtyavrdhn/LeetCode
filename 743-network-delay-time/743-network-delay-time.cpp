@@ -2,7 +2,7 @@ class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) 
     {
-        priority_queue<array<int,2>,vector< array<int,2>>,greater< array<int,2>>> pq;
+        queue<array<int,2>> pq;
         
         pq.push({0,k});
         
@@ -22,7 +22,7 @@ public:
         
         while(!pq.empty())
         {
-            auto node = pq.top();
+            auto node = pq.front();
             pq.pop();
             int u = node[1];
             int dis = node[0];
