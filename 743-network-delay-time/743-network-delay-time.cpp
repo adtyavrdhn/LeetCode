@@ -1,30 +1,48 @@
 class Solution {
 public:
-    #define inf 1e9
     int networkDelayTime(vector<vector<int>>& times, int n, int k) 
     {
-        vector<int> dist(n+1,inf);
-        dist[k] = 0;
+        priority_queue<array<int,2>,vector< array<int,2>>,greater< array<int,2>>> pq;
         
-        for(int i=0;i<n-1;i++)
+        pq.push({0,k});
+        
+        int res = 0;
+        
+        vector<vector<int>> adj[n+1];
+        
+        for(auto i : times)
         {
-            for(int j=0;j<times.size();j++)
+            int x = i[0], y = i[1], wt = i[2];
+            adj[x].push_back({y,wt});
+        }
+        
+        vector<int> dist(n+1,1e9);
+        
+        dist[k]= 0,dist[0]=0;
+        
+        while(!pq.empty())
+        {
+            auto node = pq.top();
+            pq.pop();
+            int u = node[1];
+            int dis = node[0];
+            
+            for(auto i : adj[u])
             {
-                int u = times[j][0];
-                int v = times[j][1];
-                int wt = times[j][2];
+                int v = i[0], d = i[1];
                 
-                dist[v] = min(dist[v],dist[u]+wt);
+                if(dist[v] > d+dis)
+                {
+                    dist[v] = d + dis;
+                    
+                    pq.push({dist[v],v});
+                }
             }
         }
         
-        int res = 0;
-        for(int i=1;i<=n;i++)
-        {
-            // cout<<dist[i]<<" ";
-            res = max(res,dist[i]);
-        }
+        res = *max_element(dist.begin(),dist.end());
         
         return res == 1e9 ? -1 : res;
+        
     }
 };
