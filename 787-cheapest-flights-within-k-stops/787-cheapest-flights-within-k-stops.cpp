@@ -2,47 +2,44 @@ class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) 
     {
-        queue<array<int,3>> pq;
-        
-        pq.push({0,src,0});
-        
-        vector<int> dist(n,1e9);
-        dist[src] = 0;
         vector<vector<int>> adj[n];
+        
+        queue<array<int,3>> q;
         
         for(auto i : flights)
         {
             int x = i[0], y = i[1], wt = i[2];
-            
             adj[x].push_back({y,wt});
         }
         
-        while(!pq.empty())
+        q.push({src,0,0});
+        
+        vector<int> dist(n,1e9);
+        dist[src] = 0;
+        
+        while(!q.empty())
         {
-            auto node = pq.front();
-            pq.pop();
-            
-            int u = node[1];
+            auto node = q.front();
+            q.pop();
+            int u = node[0];
+            int d = node[1];
             int steps = node[2];
-            int d = node[0];
             
             if(steps>k)
                 continue;
             
+            
             for(auto i : adj[u])
             {
-                int v = i[0];
-                int wt = i[1];
+                int v = i[0], distv=i[1];
                 
-                if(dist[v] > wt+d && steps<=k)
+                if(dist[v] > distv+d)
                 {
-                    dist[v] = wt+d;
-                    pq.push({dist[v],v,steps+1});
-                    
+                    dist[v] = distv + d;
+                    q.push({v,dist[v],steps+1});
                 }
             }
         }
-        
         
         return dist[dst] == 1e9 ? -1 : dist[dst];
     }
