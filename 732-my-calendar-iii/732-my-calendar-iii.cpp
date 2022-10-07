@@ -9,7 +9,7 @@ public:
     {
         mpp[start]++,mpp[end]--;
         
-        int res = 1,sum=0;
+        int res = 0,sum=0;
         for(auto i : mpp)
         {
             sum+= i.second;
