@@ -7,19 +7,15 @@ public:
         {
             for(int j=i;j<s.size();j++)
             {
-                string temp = s.substr(i,j-i+1);
-                
-                if(ispall(temp))
+                if(ispall(s,i,j))
                     res++;
             }
         }
         
         return res;
     }
-    bool ispall(string& s)
+    bool ispall(string& s, int i, int j)
     {
-        int i=0, j=s.size()-1;
-        
         while(i<j)
         {
             if(s[i++]!=s[j--])
