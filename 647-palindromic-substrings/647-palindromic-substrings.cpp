@@ -1,28 +1,34 @@
-class Solution {
-public:
-    int dp[1001][1001];
-    int countSubstrings(string s)
-    {
-        int res = 0;
-        memset(dp,-1,sizeof(dp));
-        for(int i=0;i<s.size();i++)
+class Solution
+{
+    public:
+        int countSubstrings(string s)
         {
-            for(int j=i;j<s.size();j++)
+            int n = s.size();
+            vector<vector < int>> dp(n, vector<int> (n, 0));
+            
+            
+            int count = 0;
+            
+            for (int i = n - 1; i >= 0; i--)
             {
-                res+= f(s,i,j);
+                for (int j = n - 1; j >= i; j--)
+                {
+                    if (i == j)
+                    {
+                        dp[i][j] = 1;	//base case : only one char
+                    }
+                    else if (j - i == 1)
+                    {
+                        if (s[i] == s[j]) dp[i][j] = 1;
+                    }
+                    else if (s[i] == s[j] && dp[i + 1][j - 1])
+                    {
+                        dp[i][j] = 1;
+                    }
+
+                    count+= dp[i][j];
+                }
             }
+            return count;
         }
-        
-        return res;
-    }
-    int f(string& s, int i, int j)
-    {
-        if(i>=j)
-            return 1;
-        
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-        
-        return dp[i][j] = s[i]==s[j] ? f(s,i+1,j-1) : 0;
-    }
 };
