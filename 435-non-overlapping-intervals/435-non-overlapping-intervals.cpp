@@ -2,11 +2,10 @@ class Solution {
 public:
     int eraseOverlapIntervals(vector<vector<int>>& intervals) 
     {
-        int prev = 0;
+        sort(intervals.begin(),intervals.end());
         
         int n = intervals.size();
-        
-        sort(intervals.begin(),intervals.end());
+        int prev = 0;
         
         int count = 0;
         
@@ -21,9 +20,7 @@ public:
                 count++;
             }
             else
-            {
                 prev = i;
-            }
         }
         
         return count;
