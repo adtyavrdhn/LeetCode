@@ -7,13 +7,13 @@ public:
         int m=grid.size();
         int n=grid[0].size();
         
-//         for(int i=0;i<m;i++)
-//         {
-//             for(int j=0;j<n;j++)
-//             {
-//                 grid[i][j]=grid[i][j]%k;
-//             }
-//         }
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                grid[i][j]=grid[i][j]%k;
+            }
+        }
         
         vector<vector<vector<ll>>> dp(m+1 , vector<vector<ll>>(n+1 , vector<ll>(51 , -1)));
         
