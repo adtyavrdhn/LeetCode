@@ -4,48 +4,50 @@ class Solution
         int compress(vector<char> &chars)
         {
             int n = chars.size();
-            stack<char> st;
 
             if (chars.size() == 1)
                 return 1;
 
             int index = 0;
 
+            char last = '\0';
+            bool flag = false;
+            int count = 0;
+            
             for (int i = 0; i < n; i++)
             {
-                if (st.empty() || st.top() == chars[i])
+                if (last=='\0' || last == chars[i])
                 {
-                    st.push(chars[i]);
+                    last = chars[i];
+                    count++;
                 }
                 else
                 {
                     char temp = chars[i];
 
-                    chars[index++] = st.top();
+                    chars[index++] = last;
 
-                    if (st.size() > 1)
+                    if (count > 1)
                     {
-                        string size = to_string(st.size());
+                        string size = to_string(count);
 
                         for (int i = 0; i < size.size(); i++)
                         {
                             chars[index++] = size[i];
                         }
                     }
-
-                    st = {};
-
-                    st.push(temp);
+                    last = chars[i];
+                    count = 1;
                 }
             }
 
-            if (!st.empty())
+            if (count>=1)
             {
-                chars[index++] = st.top();
+                chars[index++] = last;
 
-                if (st.size() > 1)
+                if (count > 1)
                 {
-                    string size = to_string(st.size());
+                    string size = to_string(count);
 
                     for (int i = 0; i < size.size(); i++)
                     {
