@@ -13,23 +13,15 @@ class Solution
             return one >= two;
         }
         
-        int res = -1;
+        int res = false;
 
         if (turn)
         {
-            if(f(nums, i + 1, j, !turn, one + nums[i], two) | f(nums, i, j - 1, !turn, one + nums[j], two))
-                res = true;
-            
-            if(res == -1)
-                res = false;
+            res = f(nums, i + 1, j, !turn, one + nums[i], two) | f(nums, i, j - 1, !turn, one + nums[j], two);
         }
         else
         {
-            if(!f(nums, i + 1, j, !turn, one, two + nums[i]) | !f(nums, i, j - 1, !turn, one, two + nums[j]))
-                res = false;
-            
-            if(res == -1)
-                res = true;
+            res = !(!f(nums, i + 1, j, !turn, one, two + nums[i]) | !f(nums, i, j - 1, !turn, one, two + nums[j]));
         }
 
         return res;
