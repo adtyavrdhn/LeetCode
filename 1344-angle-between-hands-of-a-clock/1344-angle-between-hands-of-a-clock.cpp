@@ -4,9 +4,7 @@ public:
     {
         double angleofMin = (6.0)*minutes;
         
-        double angleofHour = 30.0*(hour==12 ? 0 : (double)hour) + (double)(minutes)*0.5;
-        
-        cout<<angleofHour<<" "<<angleofMin<<endl;
+        double angleofHour = 30.0*(hour==12 ? 0 : hour) + (minutes)*0.5;
         
         double res = abs(angleofMin-angleofHour);
         
