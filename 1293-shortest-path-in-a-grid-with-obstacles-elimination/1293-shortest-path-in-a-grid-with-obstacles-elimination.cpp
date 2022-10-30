@@ -1,72 +1,49 @@
 class Solution {
 public:
-    vector<vector<int>> dir = {{-1,0},{0,-1},{1,0},{0,1}};
+    int dp[41][41][1650];
     int shortestPath(vector<vector<int>>& grid, int k) 
     {
-        queue<vector<int>> q;
-        
-        int m = grid.size();
-        int n = grid[0].size();
-        
-        vector<vector<int>> obs(m, vector<int>(n,0));
+        int m = grid.size(), n = grid[0].size();
+        memset(dp,-1,sizeof(dp));
         vector<vector<bool>> vis(m, vector<bool> (n,false));
+        int res = f(grid,k,m-1,n-1,vis);
         
-        vis[0][0]=true;
-        obs[0][0]=grid[0][0];
-        
-        
-        q.push({0,0,grid[0][0]});
-        
-        int level = 0;
-        
-        while(!q.empty())
+        return res >= 1e9 ? -1 : res;
+    }
+    int f(vector<vector<int>>&grid, int k, int i, int j,vector<vector<bool>>&vis)
+    {
+        if(i<0 || j<0 || i>= grid.size() || j>= grid[i].size() || k<0 || vis[i][j])
         {
-            int size = q.size();
-            
-            for(int i=0;i<size;i++)
-            {
-                auto node = q.front();
-                q.pop();
-                
-                
-                if(node[0]==m-1 && node[1]==n-1)
-                {
-                    return level; 
-                }
-                
-                for(auto t : dir)
-                {
-                    int nx = node[0] + t[0];
-                    int ny = node[1] + t[1];
-                    
-                     if(nx<0 || ny<0 || nx>=grid.size() || ny>=grid[0].size())
-                    {
-                       continue;
-                    }
-                    
-                    int o = obs[nx][ny];
-                    
-                    int no = node[2] + grid[nx][ny];
-                    
-                    if(!vis[nx][ny] && (no <= k))
-                    {
-                        q.push({nx,ny,no});
-                        obs[nx][ny]=no;
-                        vis[nx][ny]=true;
-                    }
-                    
-                    if(o > no && (no <= k))
-                     {
-                        q.push({nx,ny,no});
-                        obs[nx][ny]=no;
-                        vis[nx][ny]=true;
-                     }
-                }
-            }
-            
-            level++;
+            return 1e9;
         }
         
-        return -1;
+        if(i==0 && j==0)
+        {
+            return 0;
+        }
+        
+        if(dp[i][j][k]!=-1)
+            return dp[i][j][k];
+        
+        if(grid[i][j])
+        {
+            if(k==0)
+                return 1e9;
+            
+            k--;
+        }
+        
+        vis[i][j] = true;
+        
+        int left = 1 + f(grid,k,i,j-1,vis);
+        int top = 1 + f(grid,k,i-1,j,vis);
+        int right = 1 + f(grid,k,i,j+1,vis);
+        int down = 1 + f(grid,k,i+1,j,vis);
+        
+        vis[i][j]=false;
+        
+        return dp[i][j][k] = min({left,top,right,down});
     }
+    
+    // ltrd
 };
