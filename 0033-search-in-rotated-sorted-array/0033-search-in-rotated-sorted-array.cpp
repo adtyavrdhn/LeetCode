@@ -6,7 +6,7 @@ public:
         
         while(l<=r)
         {
-            int mid = (l+r)/2;
+            int mid = l + (r-l)/2;
             
             if(nums[mid] == target)
             {
