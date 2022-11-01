@@ -2,38 +2,37 @@ class Solution {
 public:
     int search(vector<int>& nums, int target) 
     {
-        int l=0,r=nums.size()-1;
+        int n = nums.size();
         
-        while(l<=r)
+        int low = 0, high = n-1;
+        
+        
+        while(low<=high)
         {
-            int mid = l + (r-l)/2;
+            int mid = low + (high-low)/2; // l+r > INT_MAX -> overflow
             
-            if(nums[mid] == target)
-            {
+            if(nums[mid]==target)
                 return mid;
-            }
             
-            if(nums[l]<=nums[mid])
+            if(nums[low]<=nums[mid]) // left half is sorted
             {
-                if(nums[l] <= target && target < nums[mid])
+                if(nums[low]<=target && target<nums[mid])
                 {
-                    r = mid - 1;
+                    high = mid - 1;
                 }
                 else
                 {
-                    l = mid + 1;
+                    low = mid + 1;
                 }
             }
             else
             {
-                if(nums[mid] < target && target <= nums[r])
+                if(target>=nums[mid] && target<=nums[high])
                 {
-                    l = mid + 1;
+                    low = mid + 1;
                 }
                 else
-                {
-                    r = mid - 1;
-                }
+                    high = mid - 1;
             }
         }
         
