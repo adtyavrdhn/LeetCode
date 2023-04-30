@@ -31,21 +31,26 @@ public:
         if(s==t)
             return true;
         
-        string temp = s;
-        vector<int> index;
+//         string temp = s;
+//         vector<int> index;
         
+//         for(int i=0;i<s.size();i++)
+//         {
+//             if(s[i]!=t[i])
+//                 index.push_back(i);
+//         }
+        
+//         if(index.size() > 2)
+//             return false;
+        
+//         swap(temp[index[0]],temp[index[1]]);
+        
+//         return temp == t;
+        int count = 0;
         for(int i=0;i<s.size();i++)
-        {
-            if(s[i]!=t[i])
-                index.push_back(i);
-        }
+            if(s[i]!=t[i]) count++;
         
-        if(index.size() > 2)
-            return false;
-        
-        swap(temp[index[0]],temp[index[1]]);
-        
-        return temp == t;
+        return count <= 2;
     }
     
     int numSimilarGroups(vector<string>& strs) {
